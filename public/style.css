@@ -1,91 +1,90 @@
-/* style.css */
-
-/* Estilo geral do corpo */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 20px;
+    background-color: #f4f4f4;
 }
 
-/* Estilo do cabeçalho */
 header.topo {
-    background-color: #4CAF50;
+    background: #007bff;
     color: white;
     padding: 10px 0;
     text-align: center;
 }
 
-/* Estilo do formulário */
-form {
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
+main {
+    margin-top: 20px;
 }
 
-/* Estilo dos rótulos */
+form {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 label {
     display: block;
     margin-bottom: 5px;
-    font-weight: bold;
 }
 
-/* Estilo dos campos de entrada */
 input[type="text"] {
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Para incluir padding e border no cálculo da largura */
 }
 
-/* Estilo do botão de envio */
 input[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #007bff;
     color: white;
-    padding: 10px 15px;
     border: none;
+    padding: 10px 15px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049; /* Cor do botão ao passar o mouse */
+    background-color: #0056b3;
 }
 
-/* Estilo da lista de produtos */
-h2.lista {
+.lista {
     margin-top: 20px;
-    color: #333;
+    font-size: 20px;
 }
 
-ul#listaProdutos {
+ul {
     list-style-type: none; /* Remove os marcadores da lista */
     padding: 0;
 }
 
-ul#listaProdutos li {
-    background-color: white;
-    margin: 5px 0;
+li {
+    background: white;
+    margin: 10px 0;
     padding: 10px;
     border-radius: 4px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between; /* Alinha os itens da lista */
+    align-items: center; /* Centraliza verticalmente */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-#listaProdutos li {
+button {
+    background-color: #007bff; /* Cor azul para os botões de editar e remover */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
     cursor: pointer;
-  }
-  
-  #listaProdutos li.editar {
-    color: blue;
-  }
-  
-  #listaProdutos li.remover {
-    color: red;
-  }
+    
+}
 
-  
+button:hover {
+    background-color: #0056b3; /* Cor azul mais escura ao passar o mouse */
+}
+
+button:focus {
+    outline: none; /* Remove o contorno ao focar no botão */
+}
