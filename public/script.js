@@ -1,94 +1,73 @@
- // Array para armazenar os produtos
- const produtos = [];
+// Array para armazenar os produtos
+let produtos = [];
 
- // Função para salvar o produto
- function salvarProduto(produto) {
-     produtos.push(produto);
- }
+// Função para adicionar um produto
+function adicionarProduto(event) {
+    event.preventDefault(); // Evita o envio do formulário
 
- // Função para listar os produtos
- function listarProdutos() {
-     const listaProdutos = document.getElementById('listaProdutos');
-     listaProdutos.innerHTML = ''; // Limpa a lista antes de adicionar os produtos
+    // Obtém os valores dos campos
+    const nomeProduto = document.getElementById('nomeProduto').value;
+    const idProduto = document.getElementById('idProduto').value;
+    const precoProduto = document.getElementById('preco').value;
 
-     produtos.forEach((produto) => {
-         const li = document.createElement('li');
-         li.textContent = `ID: ${produto.id}, Nome: ${produto.nome}, Preço: ${produto.preco}`;
-         listaProdutos.appendChild(li);
-     });
- }
+    // Cria um objeto produto
+    const produto = {
+        id: idProduto,
+        nome: nomeProduto,
+        preco: precoProduto
+    };
 
- // Evento para o envio do formulário
- document.getElementById('formProduto').addEventListener('submit', function(event) {
-     event.preventDefault(); // Evita o envio do formulário
+    // Adiciona o produto ao array
+    produtos.push(produto);
 
-     // Coleta os valores dos campos do formulário
-     const nomeProduto = document.getElementById('nomeProduto').value;
-     const idProduto = document.getElementById('idProduto').value;
-     const precoProduto = document.getElementById('preco').value;
+    // Atualiza a lista de produtos
+    atualizarListaProdutos();
 
-     // Cria um objeto produto
-     const produto = {
-         nome: nomeProduto,
-         id: idProduto,
-         preco: precoProduto
-     };
+    // Limpa os campos do formulário
+    document.getElementById('formProduto').reset();
+}
 
-     // Salva o produto e lista os produtos
-     salvarProduto(produto);
-     listarProdutos();
-
-     // Limpa o formulário
-     this.reset();
- });
-
- function removerProduto(idProduto) {
+// Função para atualizar a lista de produtos na interface
+function atualizarListaProdutos() {
     const listaProdutos = document.getElementById('listaProdutos');
-    const produto = document.querySelector(`li[data-id="${idProduto}"]`);
-    if (produto) {
-      listaProdutos.removeChild(produto);
-    }
-    // Atualizar a lista de produtos no array
-    const index = produtos.findIndex(produto => produto.id === idProduto);
-    if (index !== -1) {
-      produtos.splice(index, 1);
-    }
-  }
+    listaProdutos.innerHTML = ''; // Limpa a lista atual
 
-  function editarProduto(idProduto) {
-    const produto = produtos.find(produto => produto.id === idProduto);
-    if (produto) {
-      const nomeProduto = prompt('Digite o novo nome do produto:');
-      const precoProduto = prompt('Digite o novo preço do produto:');
-      produto.nome = nomeProduto;
-      produto.preco = precoProduto;
-      // Atualizar a lista de produtos na tela
-      const listaProdutos = document.getElementById('listaProdutos');
-      const li = document.querySelector(`li[data-id="${idProduto}"]`);
-      li.textContent = `ID: ${produto.id}, Nome: ${produto.nome}, Preço: ${produto.preco}`;
-    }
-  }function salvarAlteracoes() {
-    // Salvar a lista de produtos no array
-    produtos.forEach(produto => {
-      const li = document.querySelector(`li[data-id="${produto.id}"]`);
-      li.textContent = `ID: ${produto.id}, Nome: ${produto.nome}, Preço: ${produto.preco}`;
+    produtos.forEach((produto, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${produto.nome} - ${produto.preco} (ID: ${produto.id})`;
+
+        // Botão para editar o produto
+        const btnEditar = document.createElement('button');
+        btnEditar.textContent = 'Editar';
+        btnEditar.onclick = () => editarProduto(index);
+        li.appendChild(btnEditar);
+
+        // Botão para remover o produto
+        const btnRemover = document.createElement('button');
+        btnRemover.textContent = 'Remover';
+        btnRemover.onclick = () => removerProduto(index);
+        li.appendChild(btnRemover);
+
+        listaProdutos.appendChild(li);
     });
-    // Salvar a lista de produtos no servidor (opcional)
-    // fetch('/salvar-produtos', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(produtos),
-    // });
-  }document.addEventListener('DOMContentLoaded', () => {
-    const listaProdutos = document.getElementById('listaProdutos');
-    listaProdutos.addEventListener('click', (e) => {
-      if (e.target.tagName === 'LI') {
-        const idProduto = e.target.dataset.id;
-        if (e.target.classList.contains('editar')) {
-          editarProduto(idProduto);
-        } else if (e.target.classList.contains('remover')) {
-          removerProduto(idProduto);
-        }
-      }
-    });
-  });
+}
+
+// Função para editar um produto
+function editarProduto(index) {
+    const produto = produtos[index];
+    document.getElementById('nomeProduto').value = produto.nome;
+    document.getElementById('idProduto').value = produto.id;
+    document.getElementById('preco').value = produto.preco;
+
+    // Remove o produto da lista para que possa ser atualizado
+    removerProduto(index);
+}
+
+// Função para remover um produto
+function removerProduto(index) {
+    produtos.splice(index, 1); // Remove o produto do array
+    atualizarListaProdutos(); // Atualiza a lista na interface
+}
+
+// Adiciona o evento de submit ao formulário
+document.getElementById('formProduto').addEventListener('submit', adicionarProduto);
