@@ -78,7 +78,7 @@ button {
     padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
-    
+    margin-left: 10px; /* Espaço entre os botões */
 }
 
 button:hover {
